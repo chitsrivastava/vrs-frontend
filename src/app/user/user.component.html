@@ -1,0 +1,262 @@
+<div class="container p-4">
+    <div class="card">
+        <div class="card-header main-header">
+            <div class="cart-title" *ngIf="!isAdmin()">
+                User Dashboard
+            </div>
+            <div class="cart-title" *ngIf="isAdmin()">
+                Admin Dashboard
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <p class="card-title">Welcome {{user?.firstName}} {{user?.lastName}} !</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="material-icons">
+                                email
+                            </i> {{user?.email}}</li>
+                                <li class="list-group-item" *ngIf="user?.vendorId!=0"><i class="material-icons">
+                                card_travel
+                            </i> {{user?.vendorId}}</li>
+                                <li class="list-group-item"><i class="material-icons">
+                                today
+                            </i> {{user?.age}}</li>
+                                <li class="list-group-item"><i class="material-icons">
+                                account_box
+                            </i> {{user?.gender}}</li>
+                                <li class="list-group-item"><i class="material-icons">
+                                phone_android
+                            </i> {{user?.contactNumber}}</li>
+                                <li class="list-group-item" *ngIf="!isAdmin()"><i class="material-icons">
+                                account_balance_wallet
+                            </i>
+                                    <span *ngIf="user?.wallet?.amount!==null">{{user?.wallet?.amount}}</span>
+                                    <span *ngIf="user?.wallet?.amount===null">0</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="card mt-3" *ngIf="isAdmin()">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Admin Actions
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group-flush actions">
+                                <li class="list-group-item">
+                                    <div class="row" id="admin-action-buttons">
+                                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-2 p-2">
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 m-2">
+                                                        <img src="https://new-img.patrika.com/upload/2019/12/13/baleno_sigma-m.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                        <a routerLink="/vehicle-add" class="btn btn-primary admin-action-btn">Add Vehicle</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 p-2">
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 m-2">
+                                                        <img src="https://microhealth.com/assets/images/illustrations/personal-user-illustration-@2x.png" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                        <a routerLink="/approve" class="btn btn-primary admin-action-btn">Manage Users</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 p-2">
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 m-2">
+                                                        <img src="https://i2.wp.com/ventsmagazine.com/wp-content/uploads/2020/03/aaaamed-1.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+                                                        <a (click)="manageCoupon()" style="color:white;" class="btn btn-primary admin-action-btn">Manage Offers</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="manage-coupon" hidden>
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title mb-0">
+                                                        <span> Manage Coupons</span>
+                                                        <span style="right: 0;"><i (click)="closeManageCooupons()" class="material-icons">clear</i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body" *ngIf="coupons?.length===0">
+                                                    No coupons available.
+                                                </div>
+                                                <div class="card-body" *ngIf="coupons?.length>0">
+                                                    <div class="row" *ngFor="let coupon of coupons">
+                                                        <div class="col-5 coupon">{{coupon.code}}</div>
+                                                        <div class="col-3">{{coupon.value}}</div>
+                                                        <div class="col-4">
+                                                            <i *ngIf="isAdmin()" class="material-icons" (click)="removeCoupon(coupon.couponId)">delete</i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <form [formGroup]="couponForm" (submit)="addCoupon()" *ngIf="isAdmin()">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="CODE" (input)="couponTaken()" formControlName="couponCode" class="form-control coupon">
+                                                                    <span class="validation-error" *ngIf="couponForm.get('couponCode').touched && !couponForm.get('couponCode').valid">Code cannot be empty</span>
+                                                                    <span class="validation-error" *ngIf="couponForm.get('couponCode').touched && !couponCodeTaken && !couponForm.get('couponCode').hasError('required')">Coupon already taken.</span>
+                                                                    <span class=" validation-success " *ngIf="couponCodeTaken && !couponForm.get('couponCode').hasError('required')">Coupon available.</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <input type="number" min="1" max="50" placeholder="Value" formControlName="couponValue" class="form-control">
+                                                                    <span class="validation-error" *ngIf="couponForm.get('couponValue').touched && !couponForm.get('couponValue').valid">Enter value : 1-50</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <button type="submit" [disabled]="!couponForm.valid || !couponCodeTaken" class="btn btn-primary">Add Coupon</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mt-3 tab-card" *ngIf="!isAdmin()">
+                        <div class="card-header ">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="true">Bookings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="transactions-tab" data-toggle="tab" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active p-1" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
+                                <div class="row ml-2">
+                                    <div class="col-8">
+                                        <p *ngIf="user?.bookingList.length==0">You haven't made any bookings yet.</p>
+
+                                    </div>
+                                    <div class="col-4 d-flex justify-content-end">
+                                        <a class="justify-content-end" routerLink="/vehicles" *ngIf="user?.bookingList.length==0" class="btn btn-primary">Book Vehicle</a>
+                                    </div>
+                                </div>
+                                <table class="table" *ngIf="user?.bookingList.length!=0">
+                                    <thead id="non-mobile">
+                                        <tr>
+                                            <th>Vehicle</th>
+                                            <th>Start Date</th>
+                                            <th>Booked on</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let booking of user?.bookingList" class="booking-text" id="non-mobile">
+                                            <td>{{booking.vehicle.name}} <br> <small>{{booking.vehicle.number}}</small></td>
+                                            <td class="inline"><small> <i class="material-icons dot green">fiber_manual_record</i>{{booking.startDate}} <br> <i class="material-icons dot red">fiber_manual_record</i>{{booking.endDate}}</small>
+                                            </td>
+                                            <td>{{booking.bookingDate}}</td>
+                                            <td [ngClass]="{'success': booking.status=='active'||'complete','danger': booking.status==='cancelled'}">
+                                                {{booking.status}}
+                                                <a (click)="endRide(booking.bookingId)" *ngIf="booking.status==='active'"><i class="material-icons"
+                                                            style="color: green; font-size:18px">checkbox</i></a>
+                                                <a (click)="cancelBooking(booking.bookingId)" *ngIf="booking.status==='booked'"><i class="material-icons"
+                                                            style="color: red;">cancel</i></a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let booking of user?.bookingList" class="booking-text" id="mobile">
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        {{booking.vehicle.name}} <br> <small>{{booking.vehicle.number}}</small>
+                                                    </div>
+                                                    <div class="col-6 inline">
+                                                        <small> <i class="material-icons dot green">fiber_manual_record</i>{{booking.startDate}} <br> <i class="material-icons dot red">fiber_manual_record</i>{{booking.endDate}}</small>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <small style="font-weight: 500;">Booked on</small><br>{{booking.bookingDate}}
+
+                                                    </div>
+                                                    <div class="col-6 text-center">
+                                                        <small style="font-weight: 500;">Status</small><br>
+                                                        <div [ngClass]="{'success': booking.status=='active'||'complete','danger': booking.status==='cancelled'}">
+                                                            {{booking.status}}
+                                                            <a (click)="endRide(booking.bookingId)" *ngIf="booking.status==='active'"><i class="material-icons"
+                                                                            style="color: green; font-size:18px">checkbox</i></a>
+                                                            <a (click)="cancelBooking(booking.bookingId)" *ngIf="booking.status==='booked'"><i class="material-icons"
+                                                                            style="color: red;">cancel</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row"></div>
+                            </div>
+                            <div class="tab-pane fade p-3" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+                                <div class="row ml-2">
+                                    <div class="col-8">
+                                        <p *ngIf="user?.transactionList.length==0">You haven't made any transaction yet.
+                                        </p>
+
+                                    </div>
+                                    <div class="col-4 d-flex justify-content-end">
+                                        <a class="justify-content-end" routerLink="/vehicles" *ngIf="user?.transactionList.length==0" class="btn btn-primary">Book
+                                                Vehicle</a>
+                                    </div>
+                                </div>
+
+                                <table class="table" *ngIf="user?.transactionList.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                            <th>Coupon</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let transaction of user?.transactionList">
+                                            <td width="25%" [ngClass]="{'success': transaction.type==='credit','danger': transaction.type==='debit'}">
+                                                {{transaction.type}}</td>
+                                            <td width="25%">{{transaction.amount}}</td>
+                                            <td width="50%" class="coupon">{{transaction.coupon?transaction.coupon.code:'Not Applied'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

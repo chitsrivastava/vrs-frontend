@@ -1,0 +1,54 @@
+<div class="container  d-flex justify-content-center">
+    <div id="accordion">
+        <div class="row">
+            <span *ngIf="approvedUser==null && unApprovedUser==null" class="d-flex justify-content-center p-4 m-4">No Users Available</span>
+            <div class="col-12 mt-5" *ngIf="approvedUser?.length>0">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-center" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="card-title">
+                            Approved Users
+                        </div>
+                    </div>
+                    <div id="collapseOne" class="in" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <table>
+                                <tbody>
+                                    <tr class="row" *ngFor="let user of approvedUser">
+                                        <td class="col-lg-12 col-md-12 col-sm-12 col-12 bold">{{user.email}}</td>
+                                        <td class="col-lg-10 col-md-10 col-sm-10 col-10">{{user.firstName}} &nbsp;{{user.lastName}}</td>
+                                        <td class="col-lg-2 col-md-2 col-sm-2 col-2 text-right">
+                                            <i title="Remove User" class="material-icons red" (click)="removeUser(user.email)">remove_circle</i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="unApprovedUser?.length>0">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-center" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="card-title">Unapproved User</div>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <table>
+                                <tbody>
+                                    <tr class="row" *ngFor="let user of unApprovedUser">
+                                        <td class="col-lg-12 col-md-12 col-sm-12 col-12 bold">{{user.email}}</td>
+                                        <td class="col-lg-9 col-md-9 col-sm-9 col-9 name">{{user.firstName}}&nbsp;{{user.lastName}}</td>
+                                        <td class="col-lg-3 col-md-3 col-sm-3 col-3 text-right">
+                                            <i class="material-icons green" (click)="approveUser(user.email)">check_circle</i>
+                                            <i class="material-icons red" (click)="removeUser(user.email)">remove_circle</i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

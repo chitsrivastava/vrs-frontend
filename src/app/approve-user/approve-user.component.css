@@ -1,0 +1,43 @@
+.red {
+    color: red;
+}
+
+.text-right {
+    right: 0;
+}
+
+.green {
+    color: green
+}
+
+.card-body {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+table,
+tr {
+    display: flex;
+    justify-content: center;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 360px) {
+    td.name {
+        padding-right: 0px;
+        margin-right: 0px;
+    }
+    td.text-right {
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+}

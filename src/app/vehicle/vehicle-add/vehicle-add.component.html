@@ -1,0 +1,235 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                Add Vehicle Details
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success" *ngIf="vehicleAdded else addvehicle">vehicle details added successfully !!
+            </div>
+            <ng-template #addvehicle>
+                <form [formGroup]="addVehicleForm" (submit)="onSubmit()" class="justify-content-center">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <img [src]="addVehicleForm.get('imageUrl').value" class="img-fluid">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="imageUrl">Image Url</label>
+                                        <input type="text" placeholder="Enter image url" id="imageUrl" class="form-control" formControlName="imageUrl">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('imageUrl').touched && !addVehicleForm.get('imageUrl').valid">
+                                                        ImageUrl cannot be empty</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" class="form-control" formControlName="name">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('name').touched && addVehicleForm.get('name').hasError('required')">Name cannot be empty</span>
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('name').touched && addVehicleForm.get('name').hasError('pattern')">Only alphabets, numbers and - allowed</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-7 col-sm-7 col-7">
+                                    <div class="form-group">
+                                        <label for="number">Vehicle Number</label>
+                                        <input type="text" id="number" (input)="userTaken()" class="form-control" formControlName="number">
+                                        <span class="validation-error" *ngIf="!userNameTaken && !addVehicleForm.get('number').hasError('required')">Number already used.</span>
+                                        <span class=" validation-success " *ngIf="userNameTaken && !addVehicleForm.get('number').hasError('required')">Number available.</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3  col-md-5 col-sm-5 col-5">
+                                    <div class="form-group">
+                                        <label for="type">Type</label>
+                                        <select id="type" class="form-control" formControlName="type">
+                                            <option value="diesel">Diesel</option>
+                                            <option value="petrol">Petrol</option>
+                                            <option value="battery">Battery</option>
+                                        </select>
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('type').touched && addVehicleForm.get('type').hasError('required')">Vehicle Type cannot be empty</span>
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('type').touched && addVehicleForm.get('type').hasError('pattern')">Only alphabets, numbers and - allowed</span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="price">Price per day</label>
+                                        <input type="number" id="price" class="form-control" formControlName="price">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('price').touched && !addVehicleForm.get('price').valid">Price
+                                        should be between 1-10000</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="serviceDueDate">Service Due Date</label>
+                                        <input type="date" id="serviceDueDate" [min]="today" class="form-control" formControlName="serviceDueDate">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('serviceDueDate').touched && !addVehicleForm.get('serviceDueDate').valid">Vehicle
+                                                    Field cannot be empty</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="insuranceExpiryDate">Insurance Expiry Date</label>
+                                        <input type="date" id="insuranceExpiryDate" [min]="today" class="form-control" formControlName="insuranceExpiryDate">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('insuranceExpiryDate').touched && !addVehicleForm.get('insuranceExpiryDate').valid">Vehicle
+                                                    Field cannot be empty</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="lastServiceDate">Last Service Date</label>
+                                        <input type="date" id="lastServiceDate" [max]="today" class="form-control" formControlName="lastServiceDate">
+                                        <span class="validation-error" *ngIf="addVehicleForm.get('lastServiceDate').touched && !addVehicleForm.get('lastServiceDate').valid">
+                                            Field cannot be empty</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+
+
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group ">
+                                        <button class="btn btn-primary" [disabled]="!addVehicleForm.valid || !userNameTaken">Add Vehicle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </ng-template>
+        </div>
+    </div>
+    <!-- </div>
+<div class="container">
+    <div class="card p-4">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12">
+                <h3 class="d-flex justify-content-center mb-5">Add Vehicle Details</h3>
+                <div class="alert alert-success" *ngIf="vehicleAdded else editvehicle">vehicle details added successfully !!
+                </div>
+                <ng-template #editvehicle>
+                    <form [formGroup]="addVehicleForm" (submit)="onSubmit()" class="justify-content-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <img [src]="addVehicleForm.get('imageUrl').value" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center mt-2">
+                                        <label>Image Preview</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" id="name" name="name" class="form-control" formControlName="name">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('name').touched && addVehicleForm.get('name').hasError('required')">Name cannot be empty</span>
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('name').touched && addVehicleForm.get('name').hasError('pattern')">Only alphabets, numbers and - allowed</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="number">Vehicle Number</label>
+                                            <input type="text" id="number" (input)="userTaken()" placeholder="AB-12 CD 3456" class="form-control" formControlName="number">
+                                            <span class="validation-error" *ngIf="!userNameTaken && !addVehicleForm.get('number').hasError('required')">Number already used.</span>
+                                    <span class=" validation-success " *ngIf="userNameTaken && !addVehicleForm.get('number').hasError('required')">Number available.</span>
+                                   
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="price">Price per day</label>
+                                            <input type="number" name="price" id="price" class="form-control" formControlName="price">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('price').touched && !addVehicleForm.get('price').valid">Vehicle price
+                                                should be greater than 0</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="serviceDueDate">Service Due Date</label>
+                                            <input type="date" name="serviceDueDate" id="serviceDueDate" [min]="today" class="form-control" formControlName="serviceDueDate">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('serviceDueDate').touched && !addVehicleForm.get('serviceDueDate').valid">Item
+                                                Field cannot be empty</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="insuranceExpiryDate">Insurance Expiry Date</label>
+                                            <input type="date" name="insuranceExpiryDate" id="insuranceExpiryDate" [min]="today" class="form-control" formControlName="insuranceExpiryDate">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('insuranceExpiryDate').touched && !addVehicleForm.get('insuranceExpiryDate').valid">Item
+                                                Field cannot be empty</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="imageUrl">Image Url</label>
+                                            <input type="text" id="imageUrl" name="insuranceExpiryDate" class="form-control" formControlName="imageUrl">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('imageUrl').touched && !addVehicleForm.get('imageUrl').valid">
+                                                imageUrl cannot be empty</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="type">Vehicle Type</label>
+                                            <input type="string" id="type" name="type" class="form-control" formControlName="type">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('type').touched && addVehicleForm.get('type').hasError('required')">Vehicle Type cannot be empty</span>
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('type').touched && addVehicleForm.get('type').hasError('pattern')">Only alphabets, numbers and - allowed</span>
+                                
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="lastServiceDate">Last Service Date</label>
+                                            <input type="date" name="lastServiceDate" id="lastServiceDate" class="form-control" formControlName="lastServiceDate">
+                                            <span class="validation-error" *ngIf="addVehicleForm.get('lastServiceDate').touched && !addVehicleForm.get('lastServiceDate').valid">
+                                        Field cannot be empty</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center mt-2">
+                                <div class="form-group ">
+                                    <button type="submit" class="btn btn-primary" [disabled]="!addVehicleForm.valid || !userNameTaken">Add Vehicle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div> -->

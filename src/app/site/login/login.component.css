@@ -1,0 +1,22 @@
+.font-size-24 {
+    font-size: 24px;
+}
+
+.validation-error {
+    color: red;
+}
+
+.reset-password {
+    color: cornflowerblue;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.invalid-contact {
+    margin-left: 10px;
+    margin-top: 20px;
+}

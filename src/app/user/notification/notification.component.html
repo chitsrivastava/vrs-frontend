@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <strong class="text-secondary m-4" *ngIf="notifications?.length===0 || notifications==null">No Notifications available</strong>
+    <div class="alert alert-success m-4" *ngIf="allNotificationsCleared else notifications_card">Notifications Cleared</div>
+    <ng-template #notifications_card>
+        <div class="card mt-4" *ngIf="notifications?.length>0">
+            <div class="card-header">
+                <div class="card-title inline">
+                    Notifications
+                </div>
+            </div>
+            <div class="card-body">
+                <table>
+                    <tbody>
+                        <tr class="row mb-2" *ngFor="let notification of notifications">
+                            <td class="col-lg-7 col-md-12 col-sm-12 col-12">{{notification.message}}</td>
+                            <td class="col-lg-3 col-md-8 col-sm-8 col-8 no-pad">{{notification.date | slice : 0:10}}&nbsp;&nbsp;(<small>{{notification.date | slice : 11:19}}</small>)</td>
+                            <td class="col-lg-2 col-md-4 col-sm-4 col-4">
+                                <div class="inline">
+                                    <i (click)="deleteNotification(notification.id)" class="material-icons red">delete</i>
+                                    <button *ngIf="isAdmin()" (click)="manageNotification(notification.id)" class="btn btn-primary manage-btn">Manage</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col text-right">
+                    <button *ngIf="notifications?.length>0" (click)="clearNotification()" class="btn btn-outline-danger">Clear All<i class="material-icons delete-all">delete_sweep</i></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

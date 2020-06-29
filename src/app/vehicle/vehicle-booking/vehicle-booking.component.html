@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <div class="p-5">
+        <strong class="d-flex justify-content-center" *ngIf="bookingList?.length>0">Bookings for {{vehicleName}}</strong>
+        <strong class="d-flex justify-content-center" *ngIf="bookingList?.length==0">No Bookings available for this vehicle.</strong>
+    </div>
+    <table class="table mt-1" *ngIf="bookingList?.length>0">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Contact</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Booking date</th>
+                <th>Booking Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let booking of bookingList">
+                <td>{{booking.email}}</td>
+                <td>{{booking.contactNumber}}</td>
+                <td>{{booking.booking.startDate}}</td>
+                <td>{{booking.booking.endDate}}</td>
+                <td>{{booking.booking.bookingDate}}</td>
+                <td>{{booking.booking.status}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

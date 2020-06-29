@@ -1,0 +1,89 @@
+<div class="container mt-4 mb-5" (click)="setApproved()">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-5">
+            <div class="card mt-4">
+                <div class="card-header">
+                    <div class="card-title" *ngIf="!forgotPassword">
+                        Login
+                    </div>
+                    <div class="card-title" *ngIf="forgotPassword">
+                        Reset Password
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" *ngIf='authSource==="book"'>Login before Booking !</div>
+                    <form *ngIf="!forgotPassword" (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+                        <div class="alert alert-danger" *ngIf="!isLoginValid">Invalid Username/Password</div>
+                        <div class="alert alert-danger" *ngIf="!isUserApproved">Waiting for appproval !!</div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" ngModel required #username="ngModel" [(ngModel)]="user_email" name="username" class="form-control" placeholder="Enter Username">
+                            <span class="validation-error" *ngIf="username.touched && !username.valid">Enter Username</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" ngModel required #password="ngModel" name="password" class="form-control" placeholder="Enter Password">
+                            <span class="validation-error" *ngIf="password.touched && !password.valid">Enter Password</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                <input type="submit" [disabled]="!loginForm.valid" value="Login" class="btn btn-primary text-white">
+                            </div>
+
+                            <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <small (click)="enableResetForm()" class="reset-password">Reset Password</small>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <small class="text-secondary">New Here ? <a routerLink="/signup">Sign Up</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div *ngIf="forgotPassword">
+                        <span class="alert alert-success" *ngIf="resetSuccessfull">Password reset successfull!!</span>
+
+                        <form [formGroup]="resetPasswordForm" *ngIf="!resetSuccessfull">
+                            <div class="form-group">
+                                <label for="resetEmail">Email</label>
+                                <input type="text" id="resetEmail" formControlName="resetEmail" class="form-control" placeholder="Enter Email">
+                                <span class="validation-error" *ngIf="resetPasswordForm.get('resetEmail').touched && !resetPasswordForm.get('resetEmail').valid">Enter Email</span> </div>
+
+                            <div class="form-group">
+                                <label for="number">Contact number</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="number" class="form-control" id="number" name="number" formControlName="number" placeholder="Enter phone number">
+                                        <span class="validation-error " *ngIf="resetPasswordForm.get('number').touched && (resetPasswordForm.get('number').hasError('required')  || resetPasswordForm.get('number').hasError('pattern'))">Contact Number is invalid</span>
+                                    </div>
+                                    <div class="col-4 text-right pl-0">
+                                        <button (click)="verifyNumber()" [disabled]="!(resetPasswordForm.get('number').valid) || !(resetPasswordForm.get('resetEmail').valid) " class="btn btn-primary form-control">Verify</button>
+                                    </div>
+                                    <span class="alert alert-danger invalid-contact" *ngIf="(resetPasswordForm.get('number').valid && resetPasswordForm.get('resetEmail').valid) && !numberVerified && isVerifyClicked">Phone number not matched.</span>
+                                </div>
+                            </div>
+
+
+                            <div class="div" *ngIf="numberVerified">
+                                <div class="form-group">
+                                    <label for="otp">4 digit OTP</label>
+                                    <input type="otp" class="form-control" id="otp" name="otp" formControlName="otp" placeholder="Enter otp">
+                                    <span class="validation-error" *ngIf="resetPasswordForm.get('otp').touched && (resetPasswordForm.get('otp').hasError('required')  || resetPasswordForm.get('otp').hasError('maxlength') ||resetPasswordForm.get('otp').hasError('mminlength'))">otp is invalid</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPassword" formControlName="newPassword" placeholder="Enter Password">
+                                    <span class="validation-error" *ngIf="resetPasswordForm.get('newPassword').touched && (resetPasswordForm.get('newPassword').hasError( 'required')  || resetPasswordForm.get('newPassword').hasError('maxlength') ||resetPasswordForm.get('newPassword').hasError('mminlength'))">Password Invalid</span>
+                                </div>
+                                <span class="alert alert-success" *ngIf="resetSuccessfull">Password reset successfull!!</span>
+                                <button (click)="resetPassword()" [disabled]="!resetPasswordForm.valid" class="btn btn-primary ">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

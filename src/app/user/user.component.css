@@ -1,0 +1,194 @@
+.btn-primary {
+    color: white;
+    width: 100%;
+    height: 30px;
+    padding: 4px;
+}
+
+.cancel {
+    color: red;
+}
+
+.material-icons {
+    vertical-align: middle;
+    color: rgb(0, 89, 255);
+}
+
+.success {
+    color: green;
+}
+
+.danger {
+    color: red;
+}
+
+body {
+    background-color: #f7f8f9;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 34, 51, 0.1);
+    box-shadow: 2px 4px 10px 0 rgba(0, 34, 51, 0.05), 2px 4px 10px 0 rgba(0, 34, 51, 0.05);
+    border-radius: 0.15rem;
+}
+
+td,
+th {
+    padding-top: 5;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+tbody {
+    display: block;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* even columns width , fix width of table too*/
+}
+
+
+/* .tab-pane {
+    max-height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+} */
+
+
+/* Tabs Card */
+
+table {
+    width: 100%;
+}
+
+.tab-pane {
+    width: 100%;
+}
+
+.tab-card {
+    border: 1px solid #eee;
+}
+
+.tab-card-header {
+    background: none;
+}
+
+.coupon {
+    text-transform: uppercase;
+}
+
+
+/* Default mode */
+
+.tab-card-header>.nav-tabs {
+    border: none;
+    margin: 0px;
+}
+
+.tab-card-header>.nav-tabs>li {
+    margin-right: 2px;
+}
+
+.tab-card-header>.nav-tabs>li>a {
+    border: 0;
+    border-bottom: 2px solid transparent;
+    margin-right: 0;
+    color: #737373;
+    padding: 2px;
+}
+
+.tab-card-header>.nav-tabs>li>a.show {
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+}
+
+.tab-card-header>.nav-tabs>li>a:hover {
+    color: #007bff;
+}
+
+.tab-card-header>.tab-content {
+    padding-bottom: 0;
+}
+
+img {
+    max-width: 150px;
+    max-height: 84px;
+}
+
+.admin-action-btn {
+    width: 150px;
+}
+
+.card-header {
+    justify-content: center;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.actions {
+    padding: 0;
+}
+
+.main-header {
+    font-size: large;
+    font-weight: 500;
+    text-align: center;
+}
+
+.inline {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.dot {
+    vertical-align: middle;
+    font-size: smaller;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.scroll {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 550px) {
+    #mobile {
+        visibility: visible;
+        padding: 5px;
+    }
+    #non-mobile {
+        visibility: collapse;
+    }
+}
+
+@media screen and (min-width: 550px) {
+    #mobile {
+        visibility: collapse;
+    }
+    #non-mobile {
+        visibility: visible;
+    }
+}
+
+.active a {
+    color: red !important;
+}

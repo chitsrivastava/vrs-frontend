@@ -1,0 +1,131 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <div class="card-title">Sign Up</div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success" *ngIf="submitStatus">Sign up Successfull !!</div>
+                    <div class="alert alert-danger" *ngIf="alreadyExist">User Already Exist !!</div>
+                    <div *ngIf="submitStatus"><a routerLink="/login">Login</a></div>
+                    <form [formGroup]="signupForm" (submit)="onSignUp()" *ngIf="!submitStatus">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6 ">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" (input)="userTaken()" name="email" formControlName="email" placeholder="Enter Email">
+                                        <span class="validation-error" *ngIf="email.touched && email.hasError('required')">Email is required</span>
+                                        <span class="validation-error" *ngIf="email.touched && email.hasError('email')">Invalid email</span>
+                                        <span class="validation-error" *ngIf="email.hasError('maxlength')">Email cannot exceed 40 characters.</span>
+                                        <span class="validation-error" *ngIf="!userNameTaken && !email.hasError('required') && !email.hasError('email')">Username already taken.</span>
+                                        <span class=" validation-success " *ngIf="userNameTaken && !email.hasError('required') && !email.hasError('email')">Username available.</span>
+                                        <div class="alert alert-warning " *ngIf="signupForm.pending">
+                                            <div class="spinner-border">
+                                                <span class="sr-only ">Loading.....</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group ">
+                                        <label for="contactNumber">Contact Number</label>
+                                        <input type="number" class="form-control" id="contactNumber" name="contactNumber" formControlName="contactNumber" placeholder="Enter Contact number">
+                                        <span class="validation-error " *ngIf="contactNumber.touched && (contactNumber.hasError('required')  || contactNumber.hasError('pattern'))">Contact Number is invalid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 col-md-6 col-lg-6 ">
+                                    <div class="form-group ">
+                                        <label for="firstname">Firstname</label>
+                                        <input type="text " class="form-control " id="firstname" name="firstname" formControlName="firstname" placeholder="Enter Firstname ">
+                                        <span class="validation-error " *ngIf="firstname.touched && firstname.hasError( 'required') ">Firstname is invalid</span>
+                                        <span class="validation-error " *ngIf="firstname.touched && firstname.hasError( 'pattern') ">Firstname should be only alphabets.</span>
+                                        <span class="validation-error " *ngIf="firstname.touched && firstname.hasError( 'maxlength') ">50 characters alowed.</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 ">
+                                    <div class="form-group ">
+                                        <label for="lastname">Lastname</label>
+                                        <input type="text " class="form-control " id="lastname" name="lastname" formControlName="lastname" placeholder="Enter Lastname ">
+                                        <span class="validation-error " *ngIf="lastname.touched && lastname.hasError( 'required') ">Lastname  cannot be empty</span>
+                                        <span class="validation-error " *ngIf="lastname.touched && lastname.hasError( 'pattern') ">Lastname should be only alphabets.</span>
+                                        <span class="validation-error " *ngIf="lastname.touched && lastname.hasError( 'maxlength') ">50 characters alowed.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-6 col-md-6 col-lg-3">
+                                    <div class="form-group ">
+                                        <label for="age">Age</label>
+                                        <input type="number" class="form-control" id="age" name="age" formControlName="age" placeholder="Enter age">
+                                        <span class="validation-error " *ngIf="age.touched && age.hasError('required') ">Age is invalid</span>
+                                        <span class="validation-error " *ngIf="age.touched && (age.hasError('min') || age.hasError( 'max'))">Age limit 18-75.</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 col-lg-3">
+                                    <div class="form-group ">
+                                        <label for="gender">Gender</label>
+
+                                        <select class="form-control" id="gender" formControlName="gender" (click)=setVendorVisible()> 
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                              </select>
+                                        <span class="validation-error " *ngIf="gender.touched && gender.hasError( 'required') ">Gender cannot be empty</span>
+                                        <span class="validation-error " *ngIf="gender.touched && gender.hasError( 'pattern') ">Gender should be only alphabets.</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group">
+                                                <label for="role">Role</label>
+                                                <select class="form-control" formControlName="role" (click)=setVendorVisible()> 
+                                                <option value="user">User</option>
+                                                <option value="admin">Admin</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 pl-0" *ngIf="isVendorVisible">
+                                            <div class="form-group ">
+                                                <label for="vendorId">Vendor Id</label>
+                                                <input type="text" class="form-control " (focus)="isVendorValid()" id="vendorId" name="vendorId" formControlName="vendorId" placeholder="Enter Vendor ID">
+                                                <div class="validation-error" *ngIf="vendorId.touched && isVendorVisible  && !isVendorValid()"><small>Vendor Id is of 6-Digit</small></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group ">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Enter Password ">
+                                        <span class="validation-error" *ngIf="password.touched && password.hasError('required')">Password is invalid</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 ">
+                                    <div class="form-group ">
+                                        <label for="confirmPassword">Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password ">
+                                        <span class="validation-error" *ngIf="confirmPassword.touched && confirmPassword.hasError( 'required') ">Password cannot be empty</span>
+                                        <span class="validation-error" *ngIf="confirmPassword.touched && confirmPassword.hasError( 'nomatch') ">Password do not match</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 ">
+                                    <button class="btn btn-primary " type="submit" [disabled]="!signupForm.valid || (vendorIdRequired && !isVendorValid()) || !userNameTaken">Sign Up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

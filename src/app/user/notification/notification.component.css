@@ -1,0 +1,90 @@
+strong {
+    font-size: x-large;
+}
+
+h3 {
+    justify-content: center;
+}
+
+.table {
+    justify-content: center;
+}
+
+.card-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.inline {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+}
+
+.card-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+}
+
+.text-right {
+    position: absolute;
+    right: 0;
+}
+
+.btn-outline-danger {
+    text-align: justify;
+    vertical-align: middle;
+    font-size: smaller;
+    padding: 2px;
+    margin-top: 20px;
+}
+
+.btn-outline-danger:hover {
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .manage-btn {
+        margin: 2px;
+        padding: 2px;
+        font-size: 10px;
+        height: 20px;
+        width: max-content;
+    }
+    .material-icons.red {
+        font-size: 15px;
+        color: red;
+    }
+    .no-pad {
+        padding-right: 0;
+        margin-right: 0;
+    }
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.material-icons.red {
+    color: red;
+}
+
+.delete-all {
+    font-size: 18px;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.no-pad {
+    flex-wrap: nowrap;
+}

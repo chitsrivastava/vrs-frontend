@@ -1,0 +1,10 @@
+strong {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+table {
+    height: 250px;
+    width: 100%;
+    overflow: auto;
+}

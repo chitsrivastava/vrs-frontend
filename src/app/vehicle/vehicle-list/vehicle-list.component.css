@@ -1,0 +1,51 @@
+.coupon {
+    text-transform: uppercase;
+}
+
+.validation-error {
+    color: red;
+}
+
+.validation-success {
+    color: green;
+}
+
+.name {
+    font-size: 24px;
+}
+
+.type {
+    font-size: 16px;
+}
+
+.img-fluid {
+    max-height: inherit;
+    padding-bottom: 20px;
+}
+
+.card-body {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+.admin {
+    text-align: center;
+    vertical-align: center;
+    font-size: 15px;
+    padding: 2px;
+    height: 30px;
+    width: 80px;
+    padding-bottom: 0;
+}
+
+.admin-btn {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}

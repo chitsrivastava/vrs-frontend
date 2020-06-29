@@ -1,0 +1,19 @@
+.validation-success {
+    color: green;
+}
+
+.validation-error {
+    color: red;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 335px) {
+    select {
+        padding-right: 0;
+    }
+}

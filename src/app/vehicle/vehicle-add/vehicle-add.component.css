@@ -1,0 +1,26 @@
+.validation-error {
+    color: red;
+}
+
+.validation-success {
+    color: green;
+}
+
+.card {
+    margin-top: 80px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.btn {
+    width: max-content;
+}

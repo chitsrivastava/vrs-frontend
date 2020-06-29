@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-primary">
+    <a routerLink="/" class="navbar-brand">
+        <i class="material-icons">directions_car</i> Vehicle Reservation System
+    </a>
+    <button class="navbar-toggler navbar-toggler-icon" data-toggle="collapse" data-target="#navcontent">
+  </button>
+    <div class="collapse navbar-collapse" id="navcontent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a routerLink="vehicles" class="nav-link">Vehicles</a>
+            </li>
+            <li class="nav-item" *ngIf="!isAuthenticated()">
+                <a routerLink="login" class="nav-link">Log In</a>
+            </li>
+            <li class="nav-item" *ngIf="!isAuthenticated()">
+                <a routerLink="signup" class="nav-link">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="notifications" *ngIf="isAuthenticated()" class="nav-link">Notifications</a>
+            </li>
+
+            <li class="nav-item" *ngIf="isAuthenticated()">
+                <a routerLink="user" class="nav-link">
+                    <i class="material-icons">person</i> {{getUser()}}
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated()">
+                <a routerLink="menu" (click)="onSignOut()" class="nav-link">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
